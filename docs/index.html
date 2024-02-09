@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+  <meta name="description"
+    content="Nonprofit Tech Radar: At Hikaya, we aim to understand the emerging technologies and tools that could benefit NGOs and nonprofit organizations in making informed technology choices.">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nonprofit Tech Radar by Hikaya</title>
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script src="radar.js"></script>
+
+  <link rel="stylesheet" href="radar.css">
+</head>
+
+<body>
+
+  <svg id="radar"></svg>
+
+  <script>
+    fetch('./config.json').then(function (response) {
+      return response.json();
+    }).then(function (data) {
+      radar_visualization({
+        svg_id: "radar",
+        width: 1450,
+        height: 1000,
+        colors: {
+          background: "#fff",
+          grid: '#dddde0',
+          inactive: "#ddd"
+        },
+        title: "Nonprofit Tech Radar",
+        date: data.date,
+        quadrants: [
+          { name: "Productivity" },
+          { name: "Data analysis / Visualization" },
+          { name: "Data collection / Management" },
+          { name: "Data integration / Warehousing" },
+        ],
+        rings: [
+          { name: "ADOPT", color: "#5ba300" },
+          { name: "TRIAL", color: "#009eb0" },
+          { name: "ASSESS", color: "#c7ba00" },
+          { name: "HOLD", color: "#e09b96" }
+        ],
+        print_layout: true,
+        links_in_new_tabs: true,
+        // zoomed_quadrant: 0,
+        entries: data.entries
+      });
+    }).catch(function (err) {
+      console.log('Error loading config.json', err);
+    });
+  </script>
+
+  <table>
+    <tr>
+      <td>
+        <h3>What is the Tech Radar?</h3>
+        <p>
+          The Nonprofit Tech Radar is a list of technologies, complemented by an assessment result, called <em>ring
+            assignment</em>. We use four rings with the following semantics:
+        </p>
+        <ul>
+          <li><strong>ADOPT</strong> &mdash; Technologies we have high confidence in to serve our purpose, also in large
+            scale. Technologies with a usage culture in a production environment, low risk and recommended to be
+            widely used.</li>
+          <li><strong>TRIAL</strong> &mdash; Technologies that we have seen work with success in project work to solve a
+            real problem; first serious usage experience that confirm benefits and can uncover limitations. TRIAL
+            technologies are slightly more risky; some engineers in our organization walked this path and will share
+            knowledge and experiences.</li>
+          <li><strong>ASSESS</strong> &mdash; Technologies that are promising and have clear potential value-add for us;
+            technologies worth to invest some research and prototyping efforts in to see if it has impact. ASSESS
+            technologies have higher risks; they are often brand new and highly unproven in our organization. You will
+            find some engineers that have knowledge in the technology and promote it, you may even find teams that have
+            started a prototyping effort.</li>
+          <li><strong>HOLD</strong> &mdash; Technologies not recommended to be used for new projects. Technologies that
+            we think are not (yet) worth to (further) invest in. HOLD technologies should not be used for new projects,
+            but usually can be continued for existing projects.</li>
+        </ul>
+      </td>
+      <td>
+        <h3>Our purpose</h3>
+        <p>
+          At <a href="https://hikaya.io" target="_blank" rel="noopener">Hikaya</a>, we aim to understand the emerging technologies and tools that could
+          benefit NGOs and nonprofit organizations in making informed technology choices.
+        </p>
+        <p>
+          This project focuses on actively documenting and assessing both current tools and those on the horizon, aiming
+          to make sense of the evolving technology landscape to support these organizations.
+        </p>
+        <p>
+          <strong>Have suggestions or would like to make a contribution?</strong> Open an issue or pull request on <a href="https://github.com/hikaya-io/tech-radar" target="_blank" rel="noopener">Github</a>.
+        </p>
+      </td>
+    </tr>
+  </table>
+</body>
+
+</html>
